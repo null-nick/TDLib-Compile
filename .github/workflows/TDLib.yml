@@ -12,9 +12,7 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: |
-	sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++
-        mkdir artifacts
+      run: sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++ && mkdir artifacts
       
     - name: Fetch tdlib
       run: git clone --depth 1 https://github.com/tdlib/td.git td
