@@ -1,0 +1,31 @@
+name: BotAPI-Compile
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run: sudo apt-get install make git zlib1g-dev libssl-dev gperf cmake g++ && mkdir artifacts
+      
+    - name: Fetch botapi
+      run: git clone --depth 1 https://github.com/botapi/telegram-bot-api.git botapi
+          
+    - name: Compile
+      run: |
+        rm -rf botapi/build
+        mkdir botapi/build
+        cd botapi/build
+        CXXFLAGS="" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../../artifacts/current/ ..
+        cmake --build . --target install -j8
+             
+    - uses: actions/upload-artifact@v2
+      with:
+        name: botapi
+        path: artifacts/**/*
