@@ -1,4 +1,4 @@
-name: BotAPI-Compile
+name: TDLib-Compile
 
 on:
   push:
@@ -12,20 +12,20 @@ jobs:
 
     steps:
     - name: Install dependencies
-      run: sudo apt-get install make git zlib1g-dev libssl-dev gperf cmake g++ && mkdir artifacts
+      run: sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++ && mkdir artifacts
       
-    - name: Fetch botapi
-      run: git clone --depth 1 https://github.com/tdlib/telegram-bot-api.git botapi
+    - name: Fetch tdlib
+      run: git clone --depth 1 https://github.com/tdlib/telegram-bot-api.git td
           
     - name: Compile
       run: |
-        rm -rf botapi/build
-        mkdir botapi/build
-        cd botapi/build
+        rm -rf td/build
+        mkdir td/build
+        cd td/build
         CXXFLAGS="" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../../artifacts/current/ ..
         cmake --build . --target install -j8
              
     - uses: actions/upload-artifact@v2
       with:
-        name: botapi
-        path: artifacts/**/*
+        name: tdlib
+        path: artifacts/**/*.so*
