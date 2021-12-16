@@ -13,8 +13,6 @@ jobs:
     steps:
     - name: Install dependencies
       run: |
-        sudo apt-get update
-        sudo apt-get upgrade
 	sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake g++
         mkdir artifacts
       
