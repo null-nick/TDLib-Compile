@@ -15,7 +15,7 @@ jobs:
       run: sudo apt-get install make git zlib1g-dev libssl-dev gperf cmake g++ && mkdir artifacts
       
     - name: Fetch botapi
-      run: git clone --depth 1 https://github.com/botapi/telegram-bot-api.git botapi
+      run: git clone --depth 1 https://github.com/tdlib/telegram-bot-api.git botapi
           
     - name: Compile
       run: |
