@@ -1,0 +1,31 @@
+name: TDLib-Compile
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Install dependencies
+      run: sudo apt-get install make git zlib1g-dev libssl-dev gperf php-cli cmake clang-6.0 libc++-dev libc++abi-dev && mkdir artifacts
+      
+    - name: Fetch tdlib
+      run: git clone --depth 1 https://github.com/tdlib/td.git td
+          
+    - name: Compile
+      run: |
+        rm -rf td/build
+        mkdir td/build
+        cd td/build
+        CXXFLAGS="-stdlib=libc++" CC=/usr/bin/clang-6.0 CXX=/usr/bin/clang++-6.0 cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../../artifacts/current/ ..
+        cmake --build . --target install -j64
+             
+    - uses: actions/upload-artifact@v2
+      with:
+        name: tdlib
+        path: artifacts/**/*.so*
