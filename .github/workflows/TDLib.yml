@@ -23,7 +23,7 @@ jobs:
         mkdir td/build
         cd td/build
         CXXFLAGS="" cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX:PATH=../../artifacts/current/ ..
-        cmake --build . --target install -j128
+        cmake --build . --target install -j64
              
     - uses: actions/upload-artifact@v2
       with:
